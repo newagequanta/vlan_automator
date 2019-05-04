@@ -1,0 +1,31 @@
+---
+  - name: PLAY 1 - ISSUE SNMP COMMANDS
+    hosts: Switches
+    #    connection: local
+    gather_facts: no
+
+    tasks:
+
+      - name: TASK1.1 - COLLECT MAC TABLE
+        ios_command:
+          commands:
+            - show mac address-table
+        register: output
+
+      - name: TASK1.1 - DISPLAY MAC TABLE
+        debug: var=output.stdout[0]
+
+      - name: TASK2 - SAVE MAC TABLE TO FILE
+        copy: 
+          #content: "{{ output.stdout[0].split() }}"
+          content:
+            loop:
+              - "{{ output.stdout[0] | regex_findall('(([\\d,A-F,a-f]{4}\\.){2}[\\d,A-F,a-f]{4})') }}"
+          dest: ./show_mac_address-table.txt
+
+      - name: TASK3 - PYTHON TO CREATE MAC DATABASE
+        mac_database:
+          hostname: "{{ inventory_hostname }}"
+          raw_data: "{{ output.stdout[0] }}"
+          dest: ./python_mac_db.txt
+        register: result2

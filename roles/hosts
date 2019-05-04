@@ -1,0 +1,16 @@
+---
+all:
+    hosts:
+        mail.example.com:
+            ansible_host: 172.16.29.128
+    children:
+        CSR-Routers:
+            hosts:
+                R1:
+                    ansible_host: 172.16.29.129
+        Switches:
+            hosts:
+                SW1:
+                    ansible_host: 172.16.29.131
+                SW2:
+                    ansible_host: 172.16.29.172
