@@ -19,18 +19,26 @@ def main():
         'dest': {'default': False, 'type': 'path'}
     }
 
+    #Mandatory for Ansible
     module = AnsibleModule(argument_spec=fields)
 
+    #RegEx to find MAC
     mac_exp = re.compile(r'(([\d,A-F,a-f]{4}\.){2}[\d,A-F,a-f]{4})')
+
     macs = []
     macs_dict_hostname = {}
-    macs_dict_mac = {}
 
     hostname = module.params['hostname']
     raw_data = module.params['raw_data'].split('\n')
     dest = module.params['dest']
-    print(dest)
-    
+
+    #Load the file into a dictionary if it exists, create if it does not
+    try:
+        f_obj = open('mac_db_mac_based.json', 'r')
+        macs_dict_mac = json.load(f_obj)['macs'][0]
+        f_obj.close()
+    except:
+        macs_dict_mac = {}
     #for line in module.params['raw_data']:
     for line in raw_data:
         re_result = mac_exp.findall(line)
@@ -49,10 +57,13 @@ def main():
                 macs_dict_hostname[hostname] = [[mac_addr, if_num]]
 
             #Currently supported JSON format keyed off the MAC addresses
+            macs_dict_mac[mac_addr] = [[hostname, if_num]]
+            '''
             if mac_addr in macs_dict_mac:
                 macs_dict_mac[mac_addr].append([hostname, if_num])
             else:
                 macs_dict_mac[mac_addr] = [[hostname, if_num]]
+            '''
 
     f_obj = open('mac_db.csv', 'w')
     spamwriter = csv.writer(f_obj, delimiter=',', quotechar='|',
