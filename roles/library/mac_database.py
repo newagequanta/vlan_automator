@@ -57,7 +57,7 @@ def main():
                 macs_dict_hostname[hostname] = [[mac_addr, if_num]]
 
             #Currently supported JSON format keyed off the MAC addresses
-            macs_dict_mac[mac_addr] = [[hostname, if_num]]
+            macs_dict_mac[mac_addr] = [hostname, if_num]
             '''
             if mac_addr in macs_dict_mac:
                 macs_dict_mac[mac_addr].append([hostname, if_num])
