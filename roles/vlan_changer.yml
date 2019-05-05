@@ -1,0 +1,35 @@
+---
+
+- name: Change port VLAN based on provided MAC address
+  hosts: localhost
+  gather_facts: no
+
+  vars_prompt:
+    - name: "mac_addr"
+      prompt: "What is the MAC address? (In xxxx.xxxx.xxxx format)"
+      private: no
+    - name: "vlan"
+      prompt: "What is the desired VLAN?"
+      private: no
+
+  tasks:
+
+    - name: Find the switch with the device and the port number on the switch
+      find_switch:
+        mac_addr: "{{ mac_addr }}"
+        hostname: False
+      register: result
+
+    - debug: var=result['meta']['hostname']
+
+- name: Actual change
+  #hosts: Switches
+  hosts: "{{ hostvars['localhost']['result']['meta']['hostname'] }}"
+  gather_facts: no
+
+  tasks:
+    - name: Change VLAN on identified switch
+      ios_command:
+        commands:
+          - show version
+    #vlan: "{{ vlan }}"
