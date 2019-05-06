@@ -12,7 +12,8 @@ def main():
 
     fields = {
         'mac_addr': {'default': True, 'type': 'str'},
-        'hostname': {'default': False, 'type': 'str'}
+        'hostname': {'default': False, 'type': 'str'},
+        'switchport': {'default': False, 'type': 'str'}
     }
 
     module = AnsibleModule(argument_spec=fields)
@@ -30,8 +31,8 @@ def main():
         return
     
     if mac_addr in macs:
-        #module.params.update({'hostname': 'SW1'})
         module.params.update({'hostname': macs[mac_addr][0]})
+        module.params.update({'switchport': macs[mac_addr][1]})
         module.exit_json(change=True, meta=module.params)
     else:    
         module.exit_json(change=False)
