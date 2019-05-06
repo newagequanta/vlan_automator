@@ -4,20 +4,24 @@
   hosts: localhost
   gather_facts: no
 
+  #These prompts are from an earlier version
+  #Not able to get them to work across plays
+  #The script now receives variables on the command line
+
   vars_prompt:
     - name: "mac_addr"
       prompt: "What is the MAC address? (In xxxx.xxxx.xxxx format)"
       private: no
-    - name: "vlan"
-      prompt: "What is the desired VLAN?"
-      private: no
+#    - name: "vlan"
+#      prompt: "What is the desired VLAN?"
+#      private: no
 
   tasks:
 
     - name: Find the switch with the device and the port number on the switch
       find_switch:
         mac_addr: "{{ mac_addr }}"
-        hostname: False
+        #hostname: False
       register: result
 
     - debug: var=result['meta']['hostname']
@@ -27,9 +31,20 @@
   hosts: "{{ hostvars['localhost']['result']['meta']['hostname'] }}"
   gather_facts: no
 
+  vars_prompt:
+    - name: "vlan"
+      prompt: "What is the desired VLAN?"
+      private: no
+  vars:
+    switchport: "{{ hostvars['localhost']['result']['meta']['switchport'] }}"
+
   tasks:
     - name: Change VLAN on identified switch
-      ios_command:
-        commands:
-          - show version
-    #vlan: "{{ vlan }}"
+      ios_config:
+        lines:
+          - interface {{ switchport }}
+          - switchport access vlan {{ vlan }}
+          - do write memory
+
+    - debug: var=switchport
+    - debug: var=vlan
