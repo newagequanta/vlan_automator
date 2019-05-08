@@ -44,7 +44,7 @@
         lines:
           - interface {{ switchport }}
           - switchport access vlan {{ vlan }}
-          - do write memory
+        save_when: changed
 
     - debug: var=switchport
     - debug: var=vlan
