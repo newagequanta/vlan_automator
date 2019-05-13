@@ -58,16 +58,6 @@ def main():
 
             #Currently supported JSON format keyed off the MAC addresses
             macs_dict_mac[mac_addr] = [hostname, if_num]
-            '''
-            if mac_addr in macs_dict_mac:
-                macs_dict_mac[mac_addr].append([hostname, if_num])
-            else:
-                macs_dict_mac[mac_addr] = [[hostname, if_num]]
-            '''
-
-    f_obj = open('mac_db_hn_based.json', 'w')
-    json.dump({"switches": [macs_dict_hostname]}, f_obj)
-    f_obj.close()
 
     f_obj = open('mac_db_mac_based.json', 'w')
     json.dump({"macs": [macs_dict_mac]}, f_obj)
