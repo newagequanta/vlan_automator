@@ -65,13 +65,6 @@ def main():
                 macs_dict_mac[mac_addr] = [[hostname, if_num]]
             '''
 
-    f_obj = open('mac_db.csv', 'w')
-    spamwriter = csv.writer(f_obj, delimiter=',', quotechar='|',
-                            quoting=csv.QUOTE_MINIMAL)
-    for line in macs:
-        spamwriter.writerow(line)
-    f_obj.close()
-
     f_obj = open('mac_db_hn_based.json', 'w')
     json.dump({"switches": [macs_dict_hostname]}, f_obj)
     f_obj.close()
