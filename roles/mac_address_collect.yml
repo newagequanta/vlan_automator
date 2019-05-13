@@ -1,5 +1,5 @@
 ---
-  - name: PLAY 1 - ISSUE SNMP COMMANDS
+  - name: PLAY 1 - CREATE A DATABASE OF ALL MACS
     hosts: Switches
     #    connection: local
     gather_facts: no
