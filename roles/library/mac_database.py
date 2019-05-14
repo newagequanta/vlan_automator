@@ -17,7 +17,6 @@ def main():
     fields = {
         'hostname': {'default': True, 'type': 'str'},
         'raw_data': {'default': True, 'type': 'str'},
-        'dest': {'default': False, 'type': 'path'}
     }
 
     #Mandatory for Ansible
@@ -31,7 +30,6 @@ def main():
 
     hostname = module.params['hostname']
     raw_data = module.params['raw_data'].split('\n')
-    dest = module.params['dest']
 
     #Load the file into a dictionary if it exists, create if it does not
     '''

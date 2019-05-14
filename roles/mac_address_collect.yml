@@ -6,18 +6,18 @@
 
     tasks:
 
-      - name: TASK1.1 - COLLECT MAC TABLE
+      - name: TASK1.1 - COLLECT MAC TABLE DATA
         ios_command:
           commands:
             - show mac address-table
         register: output
 
       - name: TASK1.1 - DISPLAY MAC TABLE
+        #TO BE REMOVED ONCE PRODUCTION READY
         debug: var=output.stdout[0]
 
       - name: TASK2 - PYTHON TO CREATE MAC DATABASE
         mac_database:
           hostname: "{{ inventory_hostname }}"
           raw_data: "{{ output.stdout[0] }}"
-          dest: ./python_mac_db.txt
         register: result2
