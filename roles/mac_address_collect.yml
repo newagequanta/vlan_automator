@@ -21,3 +21,57 @@
           hostname: "{{ inventory_hostname }}"
           raw_data: "{{ output.stdout[0] }}"
         register: result2
+
+  - name: PLAY 2 - CREATE UNIFIED MAC DATABASE FROM INDIVIDUAL FILES
+    hosts: localhost
+    gather_facts: no
+    vars:
+      file_list: []
+      macs_dict: {}
+
+    tasks:
+
+      - name: TASK2.1 - CREATE OBJECT OF INDIVIDUAL JSON FILES
+        find:
+          paths: ./temp_files
+          patterns: "*.json"
+        register: file_obj
+
+      - name: TASK2.2 - CREATING A LIST OF JSON FILENAMES IN THE DICT
+        set_fact:
+          file_list: '{{ file_list + [item.path] }}'
+        no_log: True
+        loop: '{{ file_obj.files }}'
+
+      - name: TASK2.3 - LOAD JSON DATA FROM FILES IN THE TASK2.2 LIST
+        include_vars:
+          file: '{{ item }}'
+        loop: '{{ file_list }}'
+        register: file_data
+
+      - name: TASK2.4 - CREATE UNIFIED MAC DICT
+        set_fact:
+          macs_dict: '{{ macs_dict|combine(item.ansible_facts) }}'
+        loop: '{{ file_data.results }}'
+
+      - name: TASK2.5.1 - DELETE JSON FILE ON FILESYSTEM
+        #Fresh database will be created every run
+        file:
+          path: ./files/mac_database.json
+          state: absent
+
+      - name: TASK2.5.2 - CREATE JSON FILE ON FILESYSTEM
+        file:
+          path: ./files
+          state: directory
+      - name: TASK2.5.3 - CREATE JSON FILE ON FILESYSTEM
+        file:
+          path: ./files/mac_database.json
+          state: touch
+
+      - name: TASK2.5.4 - WRITE macs_dict TO JSON FILE ON FILESYSTEM
+        copy:
+          content: '{{ macs_dict }}'
+          dest: ./files/mac_database.json
+
+...
