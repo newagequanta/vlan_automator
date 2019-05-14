@@ -11,6 +11,6 @@ all:
         Switches:
             hosts:
                 SW1:
-                    ansible_host: 172.16.29.131
+                    ansible_host: 172.16.29.173
                 SW2:
-                    ansible_host: 172.16.29.172
+                    ansible_host: 172.16.29.174
