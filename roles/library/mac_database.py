@@ -71,6 +71,9 @@ def main():
     f_obj.close()
     '''
     
+    '''
+    Removing the directory creation responsibility from Python as it was added
+    to Ansible
     try:
         with open('temp_files/{}.json'.format(hostname), 'w') as f_obj:
             json.dump(macs_dict_mac, f_obj)
@@ -78,6 +81,10 @@ def main():
         os.mkdir('temp_files')
         with open('temp_files/{}.json'.format(hostname), 'w')as f_obj:
             json.dump(macs_dict_mac, f_obj)
+    '''
+    with open('temp_files/{}.json'.format(hostname), 'w')as f_obj:
+        json.dump(macs_dict_mac, f_obj)
+
     '''
     Uncomment this code for use with Python 3
     except FileNotFoundError:
