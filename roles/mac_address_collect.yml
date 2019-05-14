@@ -60,11 +60,14 @@
           path: ./files/mac_database.json
           state: absent
 
-      - name: TASK2.5.2 - CREATE JSON FILE ON FILESYSTEM
+      - name: TASK2.5.2 - CREATE ./files DIRECTORY ON FILESYSTEM
+        #Final DB will be stored in its own directory
         file:
           path: ./files
           state: directory
+
       - name: TASK2.5.3 - CREATE JSON FILE ON FILESYSTEM
+        #File must be created if absent before Ansible can write to it
         file:
           path: ./files/mac_database.json
           state: touch
