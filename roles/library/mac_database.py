@@ -60,7 +60,8 @@ def main():
             macs_dict_mac[mac_addr] = [hostname, if_num]
 
     f_obj = open('mac_db_mac_based.json', 'w')
-    json.dump({"macs": [macs_dict_mac]}, f_obj)
+    #json.dump({"macs": [macs_dict_mac]}, f_obj)
+    json.dump(macs_dict_mac, f_obj)
     f_obj.close()
 
     return_value = {"hello": "world"}
