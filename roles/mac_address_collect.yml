@@ -16,7 +16,14 @@
         #TO BE REMOVED ONCE PRODUCTION READY
         debug: var=output.stdout[0]
 
-      - name: TASK2 - PYTHON TO CREATE MAC DATABASE
+      - name: TASK2 - CREATE temp_files DIRECTORY
+        #More efficient to create the temp directory in Ansible vs. Python
+        #Forking can cause problems in Python with multiple writes
+        file:
+          path: ./temp_files
+          state: directory
+
+      - name: TASK3 - PYTHON TO CREATE MAC DATABASE
         mac_database:
           hostname: "{{ inventory_hostname }}"
           raw_data: "{{ output.stdout[0] }}"
