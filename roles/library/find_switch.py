@@ -23,8 +23,8 @@ def main():
     #Find the Switch with the VLAN
 
     try:
-        with open('mac_db_mac_based.json', 'r') as f_obj:
-            macs = json.load(f_obj)['macs'][0]
+        with open('files/mac_database.json', 'r') as f_obj:
+            macs = json.load(f_obj)
     except:
         return_value = {"MAC Database file not found"}
         module.exit_json(change=False, meta=return_value)
