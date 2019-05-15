@@ -10,11 +10,16 @@
         ios_command:
           commands:
             - show mac address-table
+            - show interface status
         register: output
 
-      - name: TASK1.1 - DISPLAY MAC TABLE
+      - name: TASK1.2 - DISPLAY MAC TABLE
         #TO BE REMOVED ONCE PRODUCTION READY
         debug: var=output.stdout[0]
+
+      - name: TASK1.3 - DISPLAY INTERFACE STATUS
+        #TO BE REMOVED ONCE PRODUCTION READY
+        debug: var=output.stdout[1]
 
       - name: TASK2 - CREATE temp_files DIRECTORY
         #More efficient to create the temp directory in Ansible vs. Python
