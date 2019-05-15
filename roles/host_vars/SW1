@@ -1,6 +1,6 @@
 ---
-ansible_ssh_host: 172.16.29.173 
-ansible_ssh_port: 22
+ansible_host: 172.16.29.173 
+ansible_port: 22
 ansible_user: cisco
 ansible_ssh_pass: cisco
 ansible_network_os: ios
