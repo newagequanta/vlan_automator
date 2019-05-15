@@ -4,17 +4,10 @@
   hosts: localhost
   gather_facts: no
 
-  #These prompts are from an earlier version
-  #Not able to get them to work across plays
-  #The script now receives variables on the command line
-
   vars_prompt:
     - name: "mac_addr"
       prompt: "What is the MAC address? (In xxxx.xxxx.xxxx format)"
       private: no
-#    - name: "vlan"
-#      prompt: "What is the desired VLAN?"
-#      private: no
 
   tasks:
 
