@@ -11,12 +11,14 @@ def main():
     Ansible arguments supported:
         - hostname - The hostname of the switch that will appear in the
                      database
-        - raw_data - Output of the "show mac address-table"
-        - dest     - OPTIONAL (future) name of the file to store the database
+        - raw_data
+            - List variable
+            - 0 Index - Output of the "show mac address-table"
+            - 1 Index - Output of the "show interface status"
     '''
     fields = {
         'hostname': {'default': True, 'type': 'str'},
-        'raw_data': {'default': True, 'type': 'str'},
+        'raw_data': {'default': True, 'type': 'list'},
     }
 
     #Mandatory for Ansible
@@ -29,7 +31,7 @@ def main():
     macs_dict_hostname = {}
 
     hostname = module.params['hostname']
-    raw_data = module.params['raw_data'].split('\n')
+    raw_data = module.params['raw_data'][0].split('\n')
 
     #Load the file into a dictionary if it exists, create if it does not
     '''

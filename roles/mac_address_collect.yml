@@ -31,7 +31,9 @@
       - name: TASK3 - PYTHON TO CREATE MAC DATABASE
         mac_database:
           hostname: "{{ inventory_hostname }}"
-          raw_data: "{{ output.stdout[0] }}"
+          raw_data: 
+            - "{{ output.stdout[0] }}"
+            - "{{ output.stdout[1] }}"
         register: result2
 
   - name: PLAY 2 - CREATE UNIFIED MAC DATABASE FROM INDIVIDUAL FILES
