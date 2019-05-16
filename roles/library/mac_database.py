@@ -27,11 +27,15 @@ def main():
     #RegEx to find MAC
     mac_exp = re.compile(r'(([\d,A-F,a-f]{4}\.){2}[\d,A-F,a-f]{4})')
 
+    #List of all trunk interfaces
+    trunks = []
+
     macs = []
     macs_dict_hostname = {}
 
     hostname = module.params['hostname']
     show_mac = module.params['raw_data'][0].split('\n')
+    show_int_status = module.params['raw_data'][1].split('\n')
 
     #Load the file into a dictionary if it exists, create if it does not
     '''
@@ -44,12 +48,21 @@ def main():
     except:
         macs_dict_mac = {}
     '''
+
+    for line in show_int_status:
+        if 'trunk' in line:
+            trunks.append(line.split()[0])
+
+    #print(trunks)
+
     macs_dict_mac = {}
     #for line in module.params['raw_data']:
     for line in show_mac:
         re_result = mac_exp.findall(line)
         if re_result:
             line_list = line.split()
+            if line_list[3] in trunks:
+                continue
             mac_addr = line_list[1]
             if_num = line_list[3]
 
