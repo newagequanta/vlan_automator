@@ -31,7 +31,7 @@ def main():
     macs_dict_hostname = {}
 
     hostname = module.params['hostname']
-    raw_data = module.params['raw_data'][0].split('\n')
+    show_mac = module.params['raw_data'][0].split('\n')
 
     #Load the file into a dictionary if it exists, create if it does not
     '''
@@ -46,7 +46,7 @@ def main():
     '''
     macs_dict_mac = {}
     #for line in module.params['raw_data']:
-    for line in raw_data:
+    for line in show_mac:
         re_result = mac_exp.findall(line)
         if re_result:
             line_list = line.split()
