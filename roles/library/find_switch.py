@@ -10,13 +10,20 @@ def main():
         - hostname - Field to exchange the switch hostname (if found)
     '''
 
-    fields = {
+    '''
+    module_args = {
         'mac_addr': {'default': True, 'type': 'str'},
         'hostname': {'default': False, 'type': 'str'},
         'switchport': {'default': False, 'type': 'str'}
     }
+    '''
+    module_args = dict(
+        mac_addr=dict(default=True, type='str'),
+        hostname=dict(default=False, type='str'),
+        switchport=dict(default=False, type='str')
+    )
 
-    module = AnsibleModule(argument_spec=fields)
+    module = AnsibleModule(argument_spec=module_args)
 
     mac_addr = module.params['mac_addr']
 
