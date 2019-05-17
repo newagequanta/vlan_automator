@@ -13,7 +13,7 @@ def main():
 
     module = AnsibleModule(argument_spec=module_args)
 
-    mac_addr = module.params['mac_addr']
+    mac_addr = module.params['mac_addr'].lower()
 
     #Find the Switch with the VLAN
 
