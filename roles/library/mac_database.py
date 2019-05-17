@@ -1,6 +1,6 @@
 #!/usr/local/bin/python
 
-from ansible.module_utils.basic import *
+from ansible.module_utils.basic import AnsibleModule
 import re
 import csv
 import json
@@ -16,13 +16,19 @@ def main():
             - 0 Index - Output of the "show mac address-table"
             - 1 Index - Output of the "show interface status"
     '''
-    fields = {
+    '''
+    module_args = {
         'hostname': {'default': True, 'type': 'str'},
         'raw_data': {'default': True, 'type': 'list'},
     }
+    '''
+    module_args = dict(
+        hostname=dict(type='str', default=True),
+        raw_data=dict(type='list', default=True)
+    )
 
     #Mandatory for Ansible
-    module = AnsibleModule(argument_spec=fields)
+    module = AnsibleModule(argument_spec=module_args)
 
     #RegEx to find MAC
     mac_exp = re.compile(r'(([\d,A-F,a-f]{4}\.){2}[\d,A-F,a-f]{4})')
