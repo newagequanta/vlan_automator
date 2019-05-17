@@ -4,19 +4,7 @@ from ansible.module_utils.basic import *
 import json
 
 def main():
-    '''
-    Ansible arguments supported:
-        - mac_addr - The MAC address whose VLAN must be changed
-        - hostname - Field to exchange the switch hostname (if found)
-    '''
 
-    '''
-    module_args = {
-        'mac_addr': {'default': True, 'type': 'str'},
-        'hostname': {'default': False, 'type': 'str'},
-        'switchport': {'default': False, 'type': 'str'}
-    }
-    '''
     module_args = dict(
         mac_addr=dict(default=True, type='str'),
         hostname=dict(default=False, type='str'),

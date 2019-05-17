@@ -7,21 +7,7 @@ import json
 import os
 
 def main():
-    '''
-    Ansible arguments supported:
-        - hostname - The hostname of the switch that will appear in the
-                     database
-        - raw_data
-            - List variable
-            - 0 Index - Output of the "show mac address-table"
-            - 1 Index - Output of the "show interface status"
-    '''
-    '''
-    module_args = {
-        'hostname': {'default': True, 'type': 'str'},
-        'raw_data': {'default': True, 'type': 'list'},
-    }
-    '''
+
     module_args = dict(
         hostname=dict(type='str', default=True),
         raw_data=dict(type='list', default=True)
