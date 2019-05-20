@@ -32,6 +32,14 @@
     switchport: "{{ hostvars['localhost']['result']['meta']['switchport'] }}"
 
   tasks:
+
+    - block:
+      - name: End playbook if VLAN ID is not numerical
+        debug:
+          msg: 'VLAN ID must be numerical!'
+      - meta: end_play
+      when: vlan is not regex('\d')
+
     - name: Change VLAN on identified switch
       ios_config:
         lines:
